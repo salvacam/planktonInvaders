@@ -1,0 +1,27 @@
+body {		
+	margin: 0 auto;
+	text-align: center;
+	/*min-width: 320px;*/
+	background-color: #000;
+}
+
+#bloque_juego {
+	margin: 0 auto;
+	/*margin-bottom: 125px;*/
+	text-align: center;
+
+	    /* Firefox */
+    display:-moz-box;
+    -moz-box-pack:center;
+    -moz-box-align:center;
+
+    /* Safari and Chrome */
+    display:-webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
+
+    /* W3C */
+    display:box;
+    box-pack:center;
+    box-align:center;
+}
