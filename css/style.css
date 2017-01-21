@@ -1,8 +1,8 @@
 body {		
 	margin: 0 auto;
 	text-align: center;
-	/*min-width: 320px;*/
-	background-color: #000;
+	/*min-width: 320px;*/	
+    background-color: #000;
 }
 
 #bloque_juego {
@@ -24,4 +24,36 @@ body {
     display:box;
     box-pack:center;
     box-align:center;
+}
+
+#controles {
+    margin: 0 auto;
+    text-align: center;
+    width: 360px;
+    height: 50;
+    /*background-color: grey; */
+    position: absolute;
+    top: 500px;
+}
+
+#left,#right,#fire  {
+    min-width: 50px;
+    min-height: 50px;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+#left {
+    background-color: red;    
+    float: left;
+}
+
+#right {
+    background-color: green;
+    float: left;
+    margin-left: 20px;
+}
+#fire {
+    background-color: blue;
+    float: right;
 }

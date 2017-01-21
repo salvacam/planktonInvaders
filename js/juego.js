@@ -10,11 +10,11 @@ var enemigos;
 var end;
 
 var botonLeft;
-var isBotonLeft;
+var isBotonLeft = false;
 var botonRight;
-var isBotonRight;
+var isBotonRight = false;
 var botonFire;
-var isBotonFire;
+var isBotonFire = false;
 var isMobile;
 //var depurar;
 
@@ -27,7 +27,7 @@ var Juego = {
         juego.load.image('arrow', 'img/arrow.png');
         juego.load.image('fire', 'img/blue-button.png');
         juego.load.image('enemigo', 'img/plankton.png');
-    }, 
+    },
     
     create: function(){
         fondoJuego = juego.add.tileSprite(0, 0, 370, 550, 'fondo');
@@ -41,7 +41,7 @@ var Juego = {
         balas = juego.add.group();
         balas.enableBody = true;
         balas.physicsBodyType = Phaser.Physics.ARCADE;
-        balas.createMultiple(20, 'laser');        
+        balas.createMultiple(20, 'laser');
         balas.setAll('anchor.x', 0.5);
         balas.setAll('anchor.y', 1);
         balas.setAll('outOfBoundsKill', true);
@@ -66,12 +66,12 @@ var Juego = {
         var animacion = juego.add.tween(enemigos).to({x:120}, 1500, Phaser.Easing.Linear.None, true, 0, 1500, true);
         animacion.onRepeat.add(descender, this);
 
-        //juego.input.maxPointers = 2;
-        //juego.input.multiInputOverride = Phaser.Input.TOUCH_OVERRIDES_MOUSE;
+        juego.input.maxPointers = 2;
+        juego.input.multiInputOverride = Phaser.Input.TOUCH_OVERRIDES_MOUSE;
         
         isMobile = false;
 
-        if(juego.device.iOS || juego.device.android) { 
+        if(juego.device.iOS || juego.device.android) {
             isMobile = true;
         }
             
@@ -83,34 +83,45 @@ var Juego = {
             botonLeft.scale.setTo(0.3);
 
             botonLeft.inputEnabled = true;
+            botonLeft.input.useHandCursor = true;
             botonLeft.events.onInputDown.add(onPressed, this);
-            botonLeft.events.onInputUp.add(onReleased, this);
+            botonLeft.events.onInputOver.add(onPressed, this);
 
-            botonRight = juego.add.image(70, 520, 'arrow');        
+            botonLeft.events.onInputUp.add(onReleased, this);
+            botonLeft.events.onInputOut.add(onReleased, this);
+            
+
+            botonRight = juego.add.image(70, 520, 'arrow');
             isBotonRight = false;
             botonRight.anchor.setTo(0.5);
             botonRight.scale.setTo(0.3);
             
-            botonRight.inputEnabled = true; 
-            botonRight.fixedToCamera = true;   
+            botonRight.inputEnabled = true;
+            botonRight.input.useHandCursor = true;
             botonRight.events.onInputDown.add(onPressed, this);
+            botonRight.events.onInputOver.add(onPressed, this);
+
             botonRight.events.onInputUp.add(onReleased, this);
+            botonRight.events.onInputOut.add(onReleased, this);
 
             
             botonFire = juego.add.image(335, 520, 'fire');
             isBotonFire = false;
+            
             botonFire.anchor.setTo(0.5);
             botonFire.scale.setTo(0.75);
 
-            botonFire.inputEnabled = true; 
-            botonFire.fixedToCamera = true;
+            botonFire.inputEnabled = true;
+            botonFire.input.useHandCursor = true;
             botonFire.events.onInputDown.add(onPressed, this);
-            botonFire.events.onInputUp.add(onReleased, this);        
+            botonFire.events.onInputOver.add(onPressed, this);
+
+            botonFire.events.onInputUp.add(onReleased, this);
+            botonFire.events.onInputOut.add(onReleased, this);
         }
         
 
-        //depurar = juego.add.text(80, 20, "Depurar", {font: "bold 14px sans-serif", fill:"#000", align:"center"});
-        //depurar.anchor.setTo(0.5);
+        //depurar = juego.add.text(80, 420, "Depurar", {font: "bold 14px sans-serif", fill:"#000", align:"center"});
     },
     
     update: function(){
@@ -134,7 +145,7 @@ var Juego = {
             }
         });
 
-        juego.physics.arcade.overlap(balas, enemigos, colision, null, this);    
+        juego.physics.arcade.overlap(balas, enemigos, colision, null, this);
 
         if (isBotonRight) {
             right();
@@ -153,11 +164,12 @@ var Juego = {
 
         depurar.text = textoDepurar;
         */
+        
     }
     
 };
 
-function colision(bala, enemigo){    
+function colision(bala, enemigo){
     bala.kill();
     enemigo.kill();
 
@@ -177,13 +189,13 @@ function right() {
     }
 }
 
-function left() {    
+function left() {
     if(nave.position.x > 15) {
         nave.position.x -= 3;
     }
 }
 
-function disparo(){      
+function disparo() {
     var bala1;
     if(juego.time.now > tiempoBala) {
          bala1 = balas.getFirstExists(false);
@@ -196,14 +208,16 @@ function disparo(){
 }
 
 function onPressed(sprite){
-    if (sprite == botonRight) {        
+    if (sprite == botonRight) {
         isBotonRight= true;
+        isBotonLeft = false;
         right();
-    } 
+    }
     if (sprite == botonLeft) {
+        isBotonRight= false;
         isBotonLeft = true;
         left();
-    } 
+    }
     if (sprite == botonFire) {
         isBotonFire = true;
         disparo();
@@ -212,11 +226,11 @@ function onPressed(sprite){
 
 function onReleased(sprite){
     if (sprite == botonRight) {
-        isBotonRight= false;        
-    } 
-    if (sprite == botonLeft) {        
+        isBotonRight= false;
+    }
+    if (sprite == botonLeft) {
         isBotonLeft= false;
-    } 
+    }
     if (sprite == botonFire) {
         isBotonFire = false;
     }
