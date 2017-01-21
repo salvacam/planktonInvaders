@@ -1,5 +1,5 @@
 var alto  = document.documentElement.clientHeight;
-var ancho = document.documentElement.clientWidth;
+var ancho = document.documentElement.clientWidth > 800 ? 800 : document.documentElement.clientWidth;
 
 var juego = new Phaser.Game(ancho, alto, Phaser.CANVAS, 'bloque_juego');
 
