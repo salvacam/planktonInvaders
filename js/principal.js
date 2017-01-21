@@ -1,4 +1,7 @@
-var juego = new Phaser.Game(370, 550, Phaser.CANVAS, 'bloque_juego');
+var alto  = document.documentElement.clientHeight;
+var ancho = document.documentElement.clientWidth;
+
+var juego = new Phaser.Game(ancho, alto, Phaser.CANVAS, 'bloque_juego');
 
 juego.state.add('Inicio', Inicio);
 juego.state.add('Juego', Juego);

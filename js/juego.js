@@ -30,9 +30,14 @@ var Juego = {
     },
     
     create: function(){
-        fondoJuego = juego.add.tileSprite(0, 0, 370, 550, 'fondo');
+        //fondoJuego = juego.add.tileSprite(0, 0, ancho, alto, 'fondo'); 
+
+        fondoJuego = juego.add.sprite(0, 0, 'fondo');
+
+        fondoJuego.height = juego.height;
+        fondoJuego.width = juego.width;
         
-        nave = juego.add.sprite(juego.width/2, 500, 'personaje');
+        nave = juego.add.sprite(juego.width/2, juego.height - 30, 'personaje');
         nave.anchor.setTo(0.5);
         
         cursores = juego.input.keyboard.createCursorKeys();
@@ -63,11 +68,12 @@ var Juego = {
         enemigos.x = 10;
         enemigos.y = 30;
         
-        var animacion = juego.add.tween(enemigos).to({x:120}, 1500, Phaser.Easing.Linear.None, true, 0, 1500, true);
+        //var animacion = juego.add.tween(enemigos).to({x:120}, 1500, Phaser.Easing.Linear.None, true, 0, 1500, true);
+        var animacion = juego.add.tween(enemigos).to({x:(juego.width - 240)}, (juego.width - 240) * 15, Phaser.Easing.Linear.None, true, 0, (juego.width - 240) * 15, true);
         animacion.onRepeat.add(descender, this);
 
-        juego.input.maxPointers = 2;
-        juego.input.multiInputOverride = Phaser.Input.TOUCH_OVERRIDES_MOUSE;
+        //juego.input.maxPointers = 2;
+        //juego.input.multiInputOverride = Phaser.Input.TOUCH_OVERRIDES_MOUSE;
         
         isMobile = false;
 
@@ -77,7 +83,7 @@ var Juego = {
             
         if (isMobile){
     
-            botonLeft = juego.add.image(15, 520, 'arrow');
+            botonLeft = juego.add.image(15, juego.height - 50, 'arrow');
             botonLeft.angle = 180;
             botonLeft.anchor.setTo(0.5);
             botonLeft.scale.setTo(0.3);
@@ -91,7 +97,7 @@ var Juego = {
             botonLeft.events.onInputOut.add(onReleased, this);
             
 
-            botonRight = juego.add.image(70, 520, 'arrow');
+            botonRight = juego.add.image(70, juego.height - 50, 'arrow');
             isBotonRight = false;
             botonRight.anchor.setTo(0.5);
             botonRight.scale.setTo(0.3);
@@ -105,7 +111,7 @@ var Juego = {
             botonRight.events.onInputOut.add(onReleased, this);
 
             
-            botonFire = juego.add.image(335, 520, 'fire');
+            botonFire = juego.add.image(juego.width - 20, juego.height - 50, 'fire');
             isBotonFire = false;
             
             botonFire.anchor.setTo(0.5);
@@ -121,7 +127,7 @@ var Juego = {
         }
         
 
-        //depurar = juego.add.text(80, 420, "Depurar", {font: "bold 14px sans-serif", fill:"#000", align:"center"});
+        //depurar = juego.add.text(40, juego.height - 80, "Depurar", {font: "bold 14px sans-serif", fill:"#000", align:"center"});
     },
     
     update: function(){
@@ -139,7 +145,7 @@ var Juego = {
         var that = this;
 
         enemigos.forEachAlive(function(enemigo) {
-            if(enemigo.previousPosition.y > 470 ) {
+            if(enemigo.previousPosition.y > juego.height - 50 ) {
                 end = false;
                 that.state.start('End');
             }
@@ -184,7 +190,7 @@ function descender(){
 }
 
 function right() {
-    if(nave.position.x < 355) {
+    if(nave.position.x < juego.width - 10) {
         nave.position.x += 3;
     }
 }
