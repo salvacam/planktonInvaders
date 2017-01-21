@@ -72,8 +72,8 @@ var Juego = {
         var animacion = juego.add.tween(enemigos).to({x:(juego.width - 240)}, (juego.width - 240) * 15, Phaser.Easing.Linear.None, true, 0, (juego.width - 240) * 15, true);
         animacion.onRepeat.add(descender, this);
 
-        //juego.input.maxPointers = 2;
-        //juego.input.multiInputOverride = Phaser.Input.TOUCH_OVERRIDES_MOUSE;
+        juego.input.maxPointers = 2;
+        juego.input.multiInputOverride = Phaser.Input.TOUCH_OVERRIDES_MOUSE;
         
         isMobile = false;
 
