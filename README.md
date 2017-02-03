@@ -8,4 +8,4 @@ Juego desarrollado con el framework <a href="https://phaser.io/" target="_blank"
 Para jugar usar los cursores derecha e izquierda y espacio para disparar, en movil se muestra botones en la pantalla.
 
 
-<a href="https://salvacam.github.io/game_mooc/" target="_blank">Jugar</a>
+<a href="https://salvacam.github.io/planktonInvaders/" target="_blank">Jugar</a>
